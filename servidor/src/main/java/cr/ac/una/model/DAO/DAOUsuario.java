@@ -9,8 +9,8 @@ import cr.ac.una.model.SQL.DAO;
  * DAO de Usuario
  */
 public class DAOUsuario extends DAO {
-    public boolean agregarUsuario(String usuario, String pass){
-        return ejecutarUpdate(sqlAgregarUsuario(usuario, pass));
+    public boolean agregarUsuario(Usuario usuario){
+        return ejecutarUpdate(sqlAgregarUsuario(usuario.getUser(), usuario.getPassword()));
     }
     public Usuario recuperarUsuario(String usuario) {
         ResultSet consulta = ejecutarConsulta(sqlRecuperarUsuario(usuario));
