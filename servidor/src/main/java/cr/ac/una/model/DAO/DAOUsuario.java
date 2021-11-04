@@ -31,7 +31,7 @@ public class DAOUsuario extends DAO {
 
     private static String sqlAgregarUsuario(String usuario, String pass) {
         return new QueryBuilder()
-                .insertInto("usuario")
+                .insertInto("usuarios")
                 .values("usuario", usuario)
                 .values("pass", pass)
                 .build();
@@ -40,7 +40,7 @@ public class DAOUsuario extends DAO {
     private static String sqlRecuperarUsuario(String usuario) {
         return new QueryBuilder()
                 .select("*")
-                .from("usuario")
+                .from("usuarios")
                 .where("usuario = " + usuario)
                 .build();
     }
