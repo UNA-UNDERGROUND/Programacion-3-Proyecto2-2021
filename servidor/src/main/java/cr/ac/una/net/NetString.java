@@ -10,12 +10,12 @@ import java.io.Reader;
  * Clase que representa un paquete de datos. los datos estan codificados como un
  * netstring ej: "5:Hello"
  */
-public class PacketData {
+public class NetString {
 
     /**
      * Crea un nuevo paquete de datos
      */
-    PacketData() {
+    NetString() {
     }
 
     /**
@@ -23,7 +23,7 @@ public class PacketData {
      * 
      * @param data cadena de texto
      */
-    PacketData(String data) {
+    NetString(String data) {
         this.data = data;
     }
 
@@ -36,7 +36,8 @@ public class PacketData {
     }
 
     /**
-     * Lee la longitud del paquete de datos del netString
+     * Lee la longitud del paquete de datos del netString, retorna nulo si no hay
+     * bytes por leer
      * 
      * @param buffer Buffer de entrada
      * @return Longitud del paquete de datos
@@ -51,6 +52,9 @@ public class PacketData {
                     break;
                 }
                 sb.append(c);
+            }
+            if (sb.length() == 0) {
+                return null;
             }
             return Integer.parseInt(sb.toString());
         } catch (IOException e) {
@@ -91,20 +95,23 @@ public class PacketData {
     }
 
     /**
-     * Desserializa un paquete de datos codificado como un netstring
+     * Desserializa un paquete de datos codificado como un netstring, retorna nulo
+     * si no hay bytes por leer
      * 
      * @param stream Buffer de entrada
      * @return Paquete de datos
      */
-    public static PacketData parseNetString(InputStream stream) {
+    public static NetString parseNetString(Reader reader) {
         try {
-            Reader reader = new InputStreamReader(stream);
             Integer longitud = getNetStringLength(reader);
-            String data = readBytes(reader, longitud);
-            return new PacketData(data);
+            if (longitud != null) {
+                String data = readBytes(reader, longitud);
+                return new NetString(data);
+            }
         } catch (Exception ex) {
             throw new RuntimeException("Cabecera invalida: " + ex.getMessage());
         }
+        return null;
     }
 
     /**
@@ -113,9 +120,9 @@ public class PacketData {
      * @param netString texto codificado como netstring
      * @return Paquete de datos
      */
-    public static PacketData parseNetString(String netString) {
+    public static NetString parseNetString(String netString) {
         InputStream stream = new ByteArrayInputStream(netString.getBytes());
-        return parseNetString(stream);
+        return parseNetString(new InputStreamReader(stream));
     }
 
     /**
