@@ -31,6 +31,11 @@ public class NetString {
         return data;
     }
 
+    /**
+     * Obtiene el String de datos
+     * 
+     * @return
+     */
     public String getData() {
         return data;
     }
@@ -131,6 +136,21 @@ public class NetString {
     @Override
     public String toString() {
         return data.getBytes().length + SEPARATOR + data + SEPARATOR_DATA;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj instanceof String) {
+            return this.getData().equals(obj);
+        }
+        if (obj instanceof NetString) {
+            NetString netString = (NetString) obj;
+            return netString.getData().equals(this.getData());
+        }
+        return true;
     }
 
     private String data = "";
