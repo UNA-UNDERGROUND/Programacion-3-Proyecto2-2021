@@ -1,17 +1,16 @@
 package cr.ac.una;
 
+import cr.ac.una.net.Server;
+
 /**
  * Hello world!
  */
 public final class App {
-    private App() {
-    }
-
-    /**
-     * Says hello to the world.
-     * @param args The arguments of the program.
-     */
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        try {
+            new Server().start();
+        } catch (InterruptedException e) {
+            System.err.println("Error al iniciar el servidor");
+        }
     }
 }
