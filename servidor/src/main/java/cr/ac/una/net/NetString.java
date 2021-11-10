@@ -15,7 +15,7 @@ public class NetString {
     /**
      * Crea un nuevo paquete de datos
      */
-    NetString() {
+    public NetString() {
     }
 
     /**
@@ -23,12 +23,26 @@ public class NetString {
      * 
      * @param data cadena de texto
      */
-    NetString(String data) {
+    public NetString(String data) {
         this.data = data;
     }
 
-    public String setData(String data) {
-        return data;
+    /**
+     * Crea un nuevo paquete de datos a partir de una cadena de texto
+     * 
+     * @param data
+     */
+    public NetString(byte[] data) {
+        this.data = new String(data);
+    }
+
+    /**
+     * Cambia el contenido del paquete de datos
+     * 
+     * @param data
+     */
+    public void setData(String data) {
+        this.data = data;
     }
 
     /**
@@ -38,6 +52,63 @@ public class NetString {
      */
     public String getData() {
         return data;
+    }
+
+    /**
+     * Desserializa un paquete de datos codificado como un netstring, retorna nulo
+     * si no hay bytes por leer
+     * 
+     * @param stream Buffer de entrada
+     * @return Paquete de datos
+     */
+    public static NetString parseNetString(Reader reader) {
+        try {
+            Integer longitud = getNetStringLength(reader);
+            if (longitud != null) {
+                String data = readBytes(reader, longitud);
+                return new NetString(data);
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException("Cabecera invalida: " + ex.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Desserializa un paquete de datos codificado como un netstring
+     * 
+     * @param netString texto codificado como netstring
+     * @return Paquete de datos
+     */
+    public static NetString parseNetString(String netString) {
+        InputStream stream = new ByteArrayInputStream(netString.getBytes());
+        return parseNetString(new InputStreamReader(stream));
+    }
+
+    /**
+     * Serializa un paquete de datos como un netstring
+     */
+    @Override
+    public String toString() {
+        return data.getBytes().length + SEPARATOR + data + SEPARATOR_DATA;
+    }
+
+    /**
+     * Compara dos paquetes de datos o con otro NetString
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj instanceof String) {
+            return this.getData().equals(obj);
+        }
+        if (obj instanceof NetString) {
+            NetString netString = (NetString) obj;
+            return netString.getData().equals(this.getData());
+        }
+        return true;
     }
 
     /**
@@ -97,60 +168,6 @@ public class NetString {
         } catch (IOException e) {
             throw new RuntimeException("No se pudo leer el paquete");
         }
-    }
-
-    /**
-     * Desserializa un paquete de datos codificado como un netstring, retorna nulo
-     * si no hay bytes por leer
-     * 
-     * @param stream Buffer de entrada
-     * @return Paquete de datos
-     */
-    public static NetString parseNetString(Reader reader) {
-        try {
-            Integer longitud = getNetStringLength(reader);
-            if (longitud != null) {
-                String data = readBytes(reader, longitud);
-                return new NetString(data);
-            }
-        } catch (Exception ex) {
-            throw new RuntimeException("Cabecera invalida: " + ex.getMessage());
-        }
-        return null;
-    }
-
-    /**
-     * Desserializa un paquete de datos codificado como un netstring
-     * 
-     * @param netString texto codificado como netstring
-     * @return Paquete de datos
-     */
-    public static NetString parseNetString(String netString) {
-        InputStream stream = new ByteArrayInputStream(netString.getBytes());
-        return parseNetString(new InputStreamReader(stream));
-    }
-
-    /**
-     * Serializa un paquete de datos como un netstring
-     */
-    @Override
-    public String toString() {
-        return data.getBytes().length + SEPARATOR + data + SEPARATOR_DATA;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj instanceof String) {
-            return this.getData().equals(obj);
-        }
-        if (obj instanceof NetString) {
-            NetString netString = (NetString) obj;
-            return netString.getData().equals(this.getData());
-        }
-        return true;
     }
 
     private String data = "";
