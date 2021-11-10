@@ -1,17 +1,25 @@
 package cr.ac.una;
 
-/**
- * Hello world!
- */
+import cr.ac.una.view.Login;
+
 public final class App {
-    private App() {
+
+    public static void main(String[] args) {
+        new App().run();
     }
 
-    /**
-     * Says hello to the world.
-     * @param args The arguments of the program.
-     */
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
+    void run() {
+        try {
+            // aspecto nativo del sistema operativo
+            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    new Login().setVisible(true);
+                }
+            });
+        } catch (Exception ex) {
+            System.err.println("Error al iniciar el cliente");
+        }
     }
 }
