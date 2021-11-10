@@ -1,4 +1,4 @@
-package cr.ac.una.net;
+package cr.ac.una.net.packet;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
