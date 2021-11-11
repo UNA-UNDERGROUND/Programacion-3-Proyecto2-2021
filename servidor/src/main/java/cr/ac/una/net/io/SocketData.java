@@ -2,10 +2,12 @@ package cr.ac.una.net.io;
 
 import java.io.IOException;
 import java.net.SocketAddress;
-import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousServerSocketChannel;
 import java.nio.channels.AsynchronousSocketChannel;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
+import cr.ac.una.net.util.netbuffer.IONetBuffer;
 
 public class SocketData {
     public SocketData(AsynchronousServerSocketChannel server) {
@@ -16,34 +18,47 @@ public class SocketData {
         this.server.accept(data, handler);
     }
 
-    public SocketData createSocketData(AsynchronousSocketChannel client) {
+    public SocketData createSocketData(AsynchronousSocketChannel client, ReadWriteHandler handler) throws IOException {
         SocketData socketData = new SocketData(this.server);
         socketData.client = client;
-        socketData.buffer = ByteBuffer.allocate(BUFFER_SIZE);
-        socketData.isRead = true;
-        socketData.clientAddr = clientAddr;
+        socketData.buffer = new IONetBuffer();
+        // socketData.inputBBuffer = ByteBuffer.allocate(BUFFER_SIZE);
+        socketData.needRead = true;
+        socketData.clientAddr = client.getRemoteAddress();
+        socketData.handler = handler;
         return socketData;
     }
 
-    public ByteBuffer getBuffer() {
-        return buffer;
-    }
-
     public String getData() {
-        buffer.flip();
-        byte bytes[] = new byte[buffer.limit()];
-        getBuffer().get(bytes, 0, buffer.limit());
+        Byte[] byteArray = buffer.getInputBuffer().getData().toArray(new Byte[0]);
+        byte[] bytes = new byte[byteArray.length];
+        for (int i = 0; i < byteArray.length; i++) {
+            bytes[i] = byteArray[i];
+        }
         String data = new String(bytes, CHARSET);
-        isRead = false;
-        buffer.rewind();
         return data;
     }
 
-    public void sendData(ReadWriteHandler handler) {
-        client.write(buffer, this, handler);
-        isRead = true;
-        buffer.clear();
-        client.read(buffer, this, handler);
+    public void popData(int bytes) {
+        buffer.getInputBuffer().popData(bytes);
+    }
+
+    public void sendData(String data) {
+        byte[] bytes = data.getBytes(CHARSET);
+        List<Byte> list = new ArrayList<Byte>();
+        for (byte b : bytes) {
+            list.add(b);
+        }
+        buffer.getOutputBuffer().pushData(list);
+        doSend();
+    }
+
+    public void doRead() {
+        client.read(buffer.getInputBuffer().getBuffer(), this, this.handler);
+    }
+
+    public void doSend() {
+        client.write(buffer.getOutputBuffer().popBuffer(), this, handler);
     }
 
     public SocketAddress getClientAddr() {
@@ -51,7 +66,7 @@ public class SocketData {
     }
 
     public boolean isRead() {
-        return isRead;
+        return needRead;
     }
 
     public void close() throws IOException {
@@ -60,10 +75,14 @@ public class SocketData {
 
     private AsynchronousServerSocketChannel server;
     private AsynchronousSocketChannel client;
-    private ByteBuffer buffer;
+    private IONetBuffer buffer;
+    // private ByteBuffer inputBBuffer;
+    // private ByteBuffer outputBBuffer;
     private SocketAddress clientAddr;
-    private boolean isRead;
+    private boolean needRead;
+    private ReadWriteHandler handler;
 
-    private static final int BUFFER_SIZE = 2048;
+    // private ArrayList<Byte> outputBuffer;
+
     private static final Charset CHARSET = Charset.forName("UTF-8");
 }

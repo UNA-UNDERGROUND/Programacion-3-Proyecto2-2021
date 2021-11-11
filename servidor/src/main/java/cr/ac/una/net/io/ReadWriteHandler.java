@@ -15,11 +15,23 @@ public class ReadWriteHandler implements CompletionHandler<Integer, SocketData> 
 
     void doWork(SocketData socketData) {
         if (socketData.isRead()) {
-            String msg = socketData.getData();
-            System.out.println("Mensaje recibido[" + socketData.getClientAddr() + "]: " + msg);
+            String buffer = socketData.getData();
+            // verificamos si tiene una nueva linea
+            if (buffer.contains("\n")) {
+                // si tiene una nueva linea, la separamos
+                String[] msgs = buffer.split("\n");
+                // obtenemos el mensaje
+                String mensaje = msgs[0];
+                // y eliminamos el mensaje de la lista
+                int bytes = mensaje.length() + 1;
+                socketData.popData(bytes);
+                System.out.println("Mensaje recibido[" + socketData.getClientAddr() + "]: " + mensaje);
+                socketData.sendData("Server->" + mensaje);
+            } else {
+                socketData.doRead();
+            }
         } else {
-            // Write to the client
-            socketData.sendData(this);
+            socketData.doSend();
         }
     }
 

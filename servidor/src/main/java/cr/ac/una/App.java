@@ -2,9 +2,7 @@ package cr.ac.una;
 
 import cr.ac.una.net.Server;
 
-/**
- * Hello world!
- */
+
 public final class App {
     public static void main(String[] args) {
         try {
