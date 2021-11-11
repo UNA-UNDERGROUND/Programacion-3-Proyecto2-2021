@@ -3,6 +3,7 @@ package cr.ac.una.net;
 import java.nio.channels.AsynchronousServerSocketChannel;
 
 import cr.ac.una.net.io.ConnectionHandler;
+import cr.ac.una.net.io.ReadWriteHandler;
 import cr.ac.una.net.io.SocketData;
 
 public class Server {
@@ -36,12 +37,12 @@ public class Server {
         }
     }
 
-    public void start() throws InterruptedException {
+    public void start(ReadWriteHandler handler) throws InterruptedException {
         Thread.currentThread().setName("Servidor");
         boolean defaultHost = host == null || host.isEmpty();
         System.out.println("Servidor abierto en[" + (defaultHost ? "*" : host) + ":" + port + "]");
         SocketData socketData = new SocketData(server);
-        server.accept(socketData, new ConnectionHandler());
+        server.accept(socketData, new ConnectionHandler(handler));
         Thread.currentThread().join();
     }
 

@@ -12,13 +12,16 @@ import java.nio.channels.CompletionHandler;
  * 
  */
 public class ConnectionHandler implements CompletionHandler<AsynchronousSocketChannel, SocketData> {
+    public ConnectionHandler(ReadWriteHandler readWriteHandler) {
+        rwHandler = readWriteHandler;
+    }
+
     @Override
     public void completed(AsynchronousSocketChannel client, SocketData serverAttach) {
         try {
             SocketAddress clientAddr = client.getRemoteAddress();
             System.out.println("Conectado cliente desde: " + clientAddr);
             serverAttach.accept(serverAttach, this);
-            ReadWriteHandler rwHandler = new ReadWriteHandler();
             SocketData clientAttatch = serverAttach.createSocketData(client, rwHandler);
             clientAttatch.doRead();
             // client.read(newAttach.getInputBBuffer(), newAttach, rwHandler);
@@ -32,4 +35,6 @@ public class ConnectionHandler implements CompletionHandler<AsynchronousSocketCh
         System.err.println("Error al conectar con cliente");
         System.err.println(e.getMessage());
     }
+
+    private ReadWriteHandler rwHandler;
 }

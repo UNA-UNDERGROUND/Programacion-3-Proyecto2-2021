@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.nio.channels.CompletionHandler;
 
 public class ReadWriteHandler implements CompletionHandler<Integer, SocketData> {
+    public ReadWriteHandler(PacketHandler packetHandler) {
+        this.packetHandler = packetHandler;
+    }
+
     @Override
     public void completed(Integer result, SocketData socketData) {
         if (result == -1) {
@@ -14,39 +18,38 @@ public class ReadWriteHandler implements CompletionHandler<Integer, SocketData> 
     }
 
     void doWork(SocketData socketData) {
-        try {
-            doSend(socketData);
-            doRead(socketData);
-        } catch (Exception e) {
-            System.err.println("Error de conexion con el cliente [" + socketData.getClientAddr() + "]: "
-                    + e.getLocalizedMessage());
-            doClose(socketData);
+        synchronized (socketData) {
+            try {
+                if (socketData.needWrite()) {
+                    doSend(socketData);
+                } else {
+                    doRead(socketData);
+                }
+            } catch (Exception e) {
+                System.err.println("Error de comunicación con el cliente [" + socketData.getClientAddr() + "]: "
+                        + e.getLocalizedMessage());
+                doClose(socketData);
+            }
         }
 
     }
 
     void doRead(SocketData socketData) {
-        if (socketData.isRead()) {
-            String buffer = socketData.getData();
-            // verificamos si tiene una nueva linea
-            if (buffer.contains("\n")) {
-                // si tiene una nueva linea, la separamos (sin quitarse el \n)
-                String[] msgs = buffer.split("\n");
-                // obtenemos el mensaje con la nueva linea
-                String mensaje = msgs[0] + "\n";
-                // y eliminamos el mensaje de la lista
-                int bytes = mensaje.length();
-                socketData.popData(bytes);
-                System.out.println("Mensaje recibido[" + socketData.getClientAddr() + "]: " + mensaje);
-                socketData.sendData("Server->" + mensaje);
-            } else {
-                socketData.doRead();
-            }
+
+        String buffer = socketData.getData();
+        int bytes = packetHandler.processPacket(buffer, socketData);
+        if (bytes > 0) {
+            socketData.popData(bytes);
+        } else if (bytes == -1) {
+            doClose(socketData);
+        } else {
+            socketData.doRead();
         }
+
     }
 
     void doSend(SocketData socketData) {
-        if (socketData.needRead()) {
+        if (socketData.needWrite()) {
             socketData.doSend();
         }
     }
@@ -62,6 +65,9 @@ public class ReadWriteHandler implements CompletionHandler<Integer, SocketData> 
 
     @Override
     public void failed(Throwable e, SocketData attach) {
-        e.printStackTrace();
+        System.err.println(
+                "Error de conexion con el cliente [" + attach.getClientAddr() + "]: " + e.getLocalizedMessage());
     }
+
+    private PacketHandler packetHandler;
 }

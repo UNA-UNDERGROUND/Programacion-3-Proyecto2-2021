@@ -7,6 +7,7 @@ import java.nio.channels.AsynchronousSocketChannel;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+
 import cr.ac.una.net.util.netbuffer.IONetBuffer;
 
 public class SocketData {
@@ -23,13 +24,12 @@ public class SocketData {
         socketData.client = client;
         socketData.buffer = new IONetBuffer();
         // socketData.inputBBuffer = ByteBuffer.allocate(BUFFER_SIZE);
-        socketData.needRead = true;
         socketData.clientAddr = client.getRemoteAddress();
         socketData.handler = handler;
         return socketData;
     }
 
-    public String getData() {
+    public synchronized String getData() {
         Byte[] byteArray = buffer.getInputBuffer().getData().toArray(new Byte[0]);
         byte[] bytes = new byte[byteArray.length];
         for (int i = 0; i < byteArray.length; i++) {
@@ -39,11 +39,11 @@ public class SocketData {
         return data;
     }
 
-    public void popData(int bytes) {
+    public synchronized void popData(int bytes) {
         buffer.getInputBuffer().popData(bytes);
     }
 
-    public void sendData(String data) {
+    public synchronized void sendData(String data) {
         byte[] bytes = data.getBytes(CHARSET);
         List<Byte> list = new ArrayList<Byte>();
         for (byte b : bytes) {
@@ -53,29 +53,24 @@ public class SocketData {
         doSend();
     }
 
-    public void doRead() {
+    public synchronized void doRead() {
         client.read(buffer.getInputBuffer().getBuffer(), this, this.handler);
     }
 
-    public void doSend() {
-
+    public synchronized void doSend() {
         client.write(buffer.getOutputBuffer().popBuffer(), this, handler);
     }
 
-    public SocketAddress getClientAddr() {
+    public synchronized SocketAddress getClientAddr() {
         return clientAddr;
     }
 
-    public boolean isRead() {
-        return needRead;
-    }
-
-    public boolean needRead() {
+    public synchronized boolean needWrite() {
         // verificamos si el buffer de salida esta vacio
         return !buffer.getOutputBuffer().isEmpty();
     }
 
-    public void close() throws IOException {
+    public synchronized void close() throws IOException {
         client.close();
     }
 
@@ -85,7 +80,6 @@ public class SocketData {
     // private ByteBuffer inputBBuffer;
     // private ByteBuffer outputBBuffer;
     private SocketAddress clientAddr;
-    private boolean needRead;
     private ReadWriteHandler handler;
 
     // private ArrayList<Byte> outputBuffer;
