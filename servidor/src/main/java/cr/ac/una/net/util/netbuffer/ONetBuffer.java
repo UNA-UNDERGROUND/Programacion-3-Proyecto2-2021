@@ -19,7 +19,7 @@ public class ONetBuffer extends NetBuffer {
      */
     public void pushData(List<Byte> data) {
         this.data.addAll(data);
-        pushBBufferData();
+        // fillBBuffer();
     }
 
     /**
@@ -27,10 +27,22 @@ public class ONetBuffer extends NetBuffer {
      * 
      * @return data in the buffer
      */
+    // public ByteBuffer popBuffer() {
+    // ByteBuffer bufferData = buffer;
+    // buffer = ByteBuffer.allocate(BUFFER_SIZE);
+    // fillBBuffer();
+    // return bufferData;
+    // }
+
     public ByteBuffer popBuffer() {
-        ByteBuffer bufferData = buffer;
-        buffer = ByteBuffer.allocate(BUFFER_SIZE);
-        fillBBuffer();
+        // primero recuperamos la lista de bytes
+        byte[] bytes = new byte[data.size()];
+        for (int i = 0; i < data.size(); i++) {
+            bytes[i] = data.get(i);
+        }
+        ByteBuffer bufferData = ByteBuffer.wrap(bytes);
+        // luego limpiamos la lista de bytes
+        data.clear();
         return bufferData;
     }
 
@@ -40,8 +52,11 @@ public class ONetBuffer extends NetBuffer {
      * @return true if the buffer is empty
      */
     public boolean isEmpty() {
-        fillBBuffer();
-        return buffer.position() == 0;
+        return data.isEmpty();
+        // llenamos el buffer primero
+        // fillBBuffer();
+        // verificamos si el buffer de salida esta vacio
+        // return buffer.position() == 0;
     }
 
     /**
@@ -66,7 +81,7 @@ public class ONetBuffer extends NetBuffer {
      * @param data   Cadena de texto
      * @return numero de bytes agregados al buffer
      */
-    public int pushBBufferData() {
+    private int pushBBufferData() {
         // vefifica si el buffer esta lleno
         if (buffer.remaining() < 1) {
             return 0;

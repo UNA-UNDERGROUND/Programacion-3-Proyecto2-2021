@@ -58,6 +58,7 @@ public class SocketData {
     }
 
     public void doSend() {
+
         client.write(buffer.getOutputBuffer().popBuffer(), this, handler);
     }
 
@@ -67,6 +68,11 @@ public class SocketData {
 
     public boolean isRead() {
         return needRead;
+    }
+
+    public boolean needRead() {
+        // verificamos si el buffer de salida esta vacio
+        return !buffer.getOutputBuffer().isEmpty();
     }
 
     public void close() throws IOException {
