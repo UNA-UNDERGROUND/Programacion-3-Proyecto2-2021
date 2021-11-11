@@ -6,6 +6,8 @@ import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
+import cr.ac.una.net.packet.netstring.NetString;
+
 public class RequestPacketTest {
     @Test
     void testParse() {

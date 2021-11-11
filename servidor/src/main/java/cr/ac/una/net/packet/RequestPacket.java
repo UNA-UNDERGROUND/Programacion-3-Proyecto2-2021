@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import cr.ac.una.net.packet.netstring.NetString;
+
 /**
  * Paquete que contiene la solicitud de un servidor.
  * <ul>

@@ -1,4 +1,4 @@
-package cr.ac.una.net.packet;
+package cr.ac.una.net.packet.netstring;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
