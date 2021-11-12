@@ -84,6 +84,11 @@ public class NetString {
      * @throws IOException              Si ocurre un error de entrada/salida
      */
     public static NetString parseNetString(String netString) throws IOException, NetStringFormatException {
+        // un netstring debe tener almenos 3 caracteres
+        // ejemplo: "0:;""
+        if (netString.length() < 3) {
+            throw new NotEnoughtBytesException("se disponen menos de 3 bytes '" + netString + " '");
+        }
         InputStream stream = new ByteArrayInputStream(netString.getBytes());
         return parseNetString(new InputStreamReader(stream));
     }
@@ -120,22 +125,37 @@ public class NetString {
      * 
      * @param buffer Buffer de entrada
      * @return Longitud del paquete de datos
+     * @throws NetStringFormatException Si no se puede deserializar el NetString,
+     *                                  ejemplo bytes insuficientes
+     * @throws IOException              Si ocurre un error de entrada/salida
      */
     private static Integer getNetStringLength(Reader buffer) throws IOException, NetStringFormatException {
+        StringBuilder sb = new StringBuilder();
         try {
-            StringBuilder sb = new StringBuilder();
             int r;
             while ((r = buffer.read()) != -1) {
                 Character c = (char) r;
                 if (c.toString().equals(SEPARATOR)) {
                     break;
+                } else if (!Character.isDigit(c)) {
+                    CharacterNotExpectedException ex;
+                    // si el primer caracter es un "-" es una longitud negativa
+                    if (sb.length() == 0 && c.toString().equals("-")) {
+                        ex = new CharacterNotExpectedException(c,
+                                new NegativeLengthException("no se admiten longitudes negativas"));
+                    } else {
+                        ex = new CharacterNotExpectedException(c);
+                    }
+
+                    throw new LengthDelimiterNotFoundException("Se recibio un caracter no esperado '" + c + "'", ex);
                 }
                 sb.append(c);
             }
             // si no hay bytes por leer
             if (sb.length() == 0) {
-                throw new LengthDeliminerNotFoundException(
-                        "No se encontro el limitador de separacion + '" + SEPARATOR + "' en la cadena");
+                throw new LengthDelimiterNotFoundException(
+                        "No se encontro el limitador de separacion + '" + SEPARATOR + "' en la cadena",
+                        new NotEnoughtBytesException("no hay mas bytes por leer"));
             }
             Integer val = Integer.parseInt(sb.toString());
             if (val < 0) {
@@ -143,7 +163,7 @@ public class NetString {
             }
             return val;
         } catch (NumberFormatException e) {
-            throw new InvalidNumberException("Longitud invalida", e);
+            throw new InvalidNumberException("Longitud invalida :'" + e.toString() + "'", e);
         }
     }
 

@@ -9,19 +9,19 @@ package cr.ac.una.net.packet.netstring.exception;
  * 
  * algunos ejemplos de netstrings que no se pueden serializar:
  * <ul>
- * <li>"1;a;"</li>
+ * <li>"1;a;" -> no se esperaba ";"</li>
  * <li>"1;a;b;"</li>
  * <li>"1"</li>
  * <li>""</li>
  * </ul>
  * 
  */
-public class LengthDeliminerNotFoundException extends LengthException {
-    public LengthDeliminerNotFoundException(String message) {
+public class LengthDelimiterNotFoundException extends LengthException {
+    public LengthDelimiterNotFoundException(String message) {
         super(message);
     }
 
-    public LengthDeliminerNotFoundException(String message, Throwable cause) {
+    public LengthDelimiterNotFoundException(String message, Throwable cause) {
         super(message, cause);
     }
 }

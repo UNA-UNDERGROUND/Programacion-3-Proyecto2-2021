@@ -8,7 +8,7 @@ package cr.ac.una.net.packet.netstring.exception;
  * NetString es negativo</li>
  * <li>{@link InvalidNumberException} El numero de bytes no es un numero
  * entero.</li>
- * <li>{@link LengthDeliminerNotFoundException} no se encuentra el separador de
+ * <li>{@link LengthDelimiterNotFoundException} no se encuentra el separador de
  * fin de bytes</li>
  * </ul>
  */
