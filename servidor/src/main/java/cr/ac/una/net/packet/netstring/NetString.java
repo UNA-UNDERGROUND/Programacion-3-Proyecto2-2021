@@ -62,17 +62,16 @@ public class NetString {
      * 
      * @param stream Buffer de entrada
      * @return Paquete de datos
+     * @throws NetStringFormatException Si no se puede deserializar el NetString
+     * @throws IOException              Si ocurre un error de entrada/salida
      */
-    public static NetString parseNetString(Reader reader) {
-        try {
-            Integer longitud = getNetStringLength(reader);
-            if (longitud != null) {
-                String data = readBytes(reader, longitud);
-                return new NetString(data);
-            }
-        } catch (Exception ex) {
-            throw new RuntimeException("Cabecera invalida: " + ex.getMessage());
+    public static NetString parseNetString(Reader reader) throws IOException, NetStringFormatException {
+        Integer longitud = getNetStringLength(reader);
+        if (longitud != null) {
+            String data = readBytes(reader, longitud);
+            return new NetString(data);
         }
+
         return null;
     }
 
@@ -81,8 +80,10 @@ public class NetString {
      * 
      * @param netString texto codificado como netstring
      * @return Paquete de datos
+     * @throws NetStringFormatException Si no se puede deserializar el NetString
+     * @throws IOException              Si ocurre un error de entrada/salida
      */
-    public static NetString parseNetString(String netString) {
+    public static NetString parseNetString(String netString) throws IOException, NetStringFormatException {
         InputStream stream = new ByteArrayInputStream(netString.getBytes());
         return parseNetString(new InputStreamReader(stream));
     }

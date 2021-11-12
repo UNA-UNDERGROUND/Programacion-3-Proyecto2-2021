@@ -6,9 +6,9 @@ package cr.ac.una.net.packet.netstring.exception;
  * 
  * ejemplos:
  * <ul>
- * <li>-1</li>
- * <li>-2</li>
- * <li>-3</li>
+ * <li>"-1:hola mundo;"</li>
+ * <li>"-2:adios mundo cruel;"</li>
+ * <li>"-3:Alcina Dimistrescu;"</li>
  * </ul>
  */
 public class NegativeLengthException extends LengthException {
