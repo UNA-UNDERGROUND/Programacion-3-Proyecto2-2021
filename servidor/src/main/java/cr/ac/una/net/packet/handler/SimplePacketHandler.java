@@ -7,10 +7,10 @@ import cr.ac.una.net.io.SocketData;
 /**
  * gestiona los paquetes por lineas
  */
-public class SimplePacketHandler implements PacketHandler {
+public class SimplePacketHandler extends ProcessorPacketHandler implements PacketHandler {
 
     public SimplePacketHandler(PacketProcessor processor) {
-        this.processor = processor;
+        super(processor);
     }
 
     @Override
@@ -51,5 +51,4 @@ public class SimplePacketHandler implements PacketHandler {
         socketData.sendData(packet);
     }
 
-    private PacketProcessor processor;
 }

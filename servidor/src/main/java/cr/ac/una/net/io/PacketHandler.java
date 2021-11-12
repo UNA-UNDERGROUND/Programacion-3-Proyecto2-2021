@@ -16,8 +16,8 @@ public interface PacketHandler {
      * @param buffer el buffer con los datos recibidos.
      * @return la cantidad de bytes del paquete procesado.
      */
-    public int processPacket(String buffer, SocketData socketData);
+    public int processPacket(String buffer, SocketData client);
 
-    public void transferPacket(String packet, SocketData socketData);
+    public void transferPacket(String packet, SocketData client);
 
 }
