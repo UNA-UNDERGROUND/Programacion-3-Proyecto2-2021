@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
+import cr.ac.una.net.packet.netstring.exception.*;
+
 /**
  * Clase que representa un paquete de datos. los datos estan codificados como un
  * netstring ej: "5:Hello"
@@ -118,7 +120,7 @@ public class NetString {
      * @param buffer Buffer de entrada
      * @return Longitud del paquete de datos
      */
-    private static Integer getNetStringLength(Reader buffer) {
+    private static Integer getNetStringLength(Reader buffer) throws IOException, NetStringFormatException {
         try {
             StringBuilder sb = new StringBuilder();
             int r;
@@ -129,12 +131,18 @@ public class NetString {
                 }
                 sb.append(c);
             }
+            // si no hay bytes por leer
             if (sb.length() == 0) {
-                return null;
+                throw new LengthDeliminerNotFoundException(
+                        "No se encontro el limitador de separacion + '" + SEPARATOR + "' en la cadena");
             }
-            return Integer.parseInt(sb.toString());
-        } catch (IOException e) {
-            throw new RuntimeException("No se pudo leer el paquete");
+            Integer val = Integer.parseInt(sb.toString());
+            if (val < 0) {
+                throw new NegativeLengthException("longitud negativa no valida: " + val);
+            }
+            return val;
+        } catch (NumberFormatException e) {
+            throw new InvalidNumberException("Longitud invalida", e);
         }
     }
 
@@ -143,30 +151,29 @@ public class NetString {
      * 
      * @param reader Buffer de entrada
      * @param bytes  bytes a leer del paquete de datos
-     * @return
+     * @return el string deserializado
+     * @throws IOException              error de I/O
+     * @throws NetStringFormatException cuando no se deserializar correctamente
      */
-    private static String readBytes(Reader reader, int bytes) {
+    private static String readBytes(Reader reader, int bytes) throws IOException, NetStringFormatException {
         StringBuilder sb = new StringBuilder();
         int leidos = 0;
-        try {
-            int r;
-            while (leidos < bytes) {
-                r = reader.read();
-                if (r == -1) {
-                    throw new RuntimeException("Underflow Error");
-                }
-                sb.append((char) r);
-                leidos++;
-            }
+        int r;
+        while (leidos < bytes) {
             r = reader.read();
-            Character c = (char) r;
-            if (c.toString().equals(SEPARATOR_DATA)) {
-                return sb.toString();
-            } else {
-                throw new RuntimeException("Separador invalido");
+            if (r == -1) {
+                // no hay bytes por leer
+                throw new NotEnoughtBytesException("No hay suficientes bytes por leer");
             }
-        } catch (IOException e) {
-            throw new RuntimeException("No se pudo leer el paquete");
+            sb.append((char) r);
+            leidos++;
+        }
+        r = reader.read();
+        Character c = (char) r;
+        if (c.toString().equals(SEPARATOR_DATA)) {
+            return sb.toString();
+        } else {
+            throw new DataDelimiterNotFoundException("Separador invalido");
         }
     }
 
