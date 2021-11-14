@@ -16,8 +16,8 @@ public class EchoProcessor implements PacketProcessor {
 
     @Override
     public void sendPacket(String message, SocketData client, PacketHandler handler) {
-        String mensaje = "Server[EchoProcessor]->" + message;
-        System.out.println("(" + (client.getClientAddr()) + ")" + mensaje);
+        String mensaje = message;
+        System.out.println("Server[EchoProcessor]->(" + (client.getClientAddr()) + ")" + mensaje);
         handler.transferPacket(mensaje, client);
     }
 
