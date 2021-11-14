@@ -11,6 +11,7 @@ import cr.ac.una.net.packet.netstring.exception.CharacterNotExpectedException;
 import cr.ac.una.net.packet.netstring.exception.LengthDelimiterNotFoundException;
 import cr.ac.una.net.packet.netstring.exception.NegativeLengthException;
 import cr.ac.una.net.packet.netstring.exception.NetStringFormatException;
+import cr.ac.una.net.packet.netstring.exception.NotEnoughtBytesException;
 
 public class NetStringTest {
     @Test
@@ -48,8 +49,11 @@ public class NetStringTest {
 
     @Test
     void LengthDelimiterNotFoundExceptionTest() {
-        String netString = "1;a;";
-        assertThrows(NetStringFormatException.class, () -> NetString.parseNetString(netString));
+        String netString = "123";
+
+        LengthDelimiterNotFoundException ex = assertThrows(LengthDelimiterNotFoundException.class,
+                () -> NetString.parseNetString(netString));
+        assertTrue(ex.getCause() instanceof NotEnoughtBytesException);
     }
 
     @Test

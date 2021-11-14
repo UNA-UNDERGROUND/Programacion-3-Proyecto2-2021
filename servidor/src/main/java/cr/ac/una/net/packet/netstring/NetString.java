@@ -132,10 +132,12 @@ public class NetString {
     private static Integer getNetStringLength(Reader buffer) throws IOException, NetStringFormatException {
         StringBuilder sb = new StringBuilder();
         try {
+            boolean delimiterFound = false;
             int r;
             while ((r = buffer.read()) != -1) {
                 Character c = (char) r;
                 if (c.toString().equals(SEPARATOR)) {
+                    delimiterFound = true;
                     break;
                 } else if (!Character.isDigit(c)) {
                     CharacterNotExpectedException ex;
@@ -154,7 +156,7 @@ public class NetString {
                 sb.append(c);
             }
             // si no hay bytes por leer
-            if (sb.length() == 0) {
+            if (sb.length() == 0 || (!delimiterFound && r == -1)) {
                 throw new LengthDelimiterNotFoundException(
                         "No se encontro el limitador de separacion + '" + SEPARATOR + "' en la cadena",
                         new NotEnoughtBytesException("no hay mas bytes por leer"));
