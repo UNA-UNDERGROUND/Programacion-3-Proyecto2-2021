@@ -7,7 +7,7 @@ package cr.ac.una.net.packet.netstring.exception;
  * <ul>
  * <li>{@link LengthException} no se pudo deserializar la longitud del paquete
  * </li>
- * <li>{@link DataException}no se pudo deserializar los datos del paquete</li>
+ * <li>{@link DataException} no se pudo deserializar los datos del paquete</li>
  * <li>{@link CharacterNotExpectedException} se recibio un caracter no
  * esperado</li>
  * </ul>
