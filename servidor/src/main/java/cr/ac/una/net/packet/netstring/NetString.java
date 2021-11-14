@@ -146,6 +146,7 @@ public class NetString {
                     } else {
                         ex = new CharacterNotExpectedException(c);
                     }
+                    throw ex;
                     // se retorna CharacterNotExpectedException o NegativeLengthException
                     // throw new LengthDelimiterNotFoundException("Se recibio un caracter no
                     // esperado '" + c + "'", ex);

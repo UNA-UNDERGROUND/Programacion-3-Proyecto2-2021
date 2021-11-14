@@ -17,12 +17,12 @@ public class CharacterNotExpectedException extends NetStringFormatException {
     private Character c;
 
     public CharacterNotExpectedException(Character c) {
-        super("character -> '" + c + "'");
+        super("character -> [0x" + Integer.toHexString((int) c).toUpperCase() + "]'" + c + "'");
         this.c = c;
     }
 
     public CharacterNotExpectedException(Character c, Throwable cause) {
-        super("character -> '" + c + "'", cause);
+        super("character -> [0x" + Integer.toHexString((int) c).toUpperCase() + "]'" + c + "'", cause);
         this.c = c;
     }
 
