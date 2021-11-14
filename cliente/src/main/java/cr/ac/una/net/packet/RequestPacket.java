@@ -125,7 +125,10 @@ public class RequestPacket {
                     lista.add(ns.getData());
                 }
             } catch (Exception e) {
+                // verificamos que el stream no este vacio
+                if (reader.read() != -1) {
                     throw new IllegalArgumentException("Parametros no validos");
+                }
             }
             return lista;
         } catch (Exception e) {
