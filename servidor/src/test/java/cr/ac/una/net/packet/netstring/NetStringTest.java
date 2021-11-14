@@ -31,14 +31,11 @@ public class NetStringTest {
         // NetString.parseNetString(netString));
         // en nuestra implementacion de NetString no se puede que el valor de la
         // longitud sea negativo
-        // ya que se genera una excepcion de formato LengthDelimiterNotFoundException
-        LengthDelimiterNotFoundException ex1 = assertThrows(LengthDelimiterNotFoundException.class,
+        // ya que se genera una excepcion de formato character not expected exception
+        CharacterNotExpectedException ex1 = assertThrows(CharacterNotExpectedException.class,
                 () -> NetString.parseNetString(netString));
-        // y la causa de la excepcion es caracter no esperado
-        assertTrue(ex1.getCause() instanceof CharacterNotExpectedException);
-        CharacterNotExpectedException ex2 = (CharacterNotExpectedException) ex1.getCause();
-        // y la causa de este es longitud negativa
-        assertTrue(ex2.getCause() instanceof NegativeLengthException);
+        // y la causa de la excepcion es longitud negativa
+        assertTrue(ex1.getCause() instanceof NegativeLengthException);
     }
 
     @Test
