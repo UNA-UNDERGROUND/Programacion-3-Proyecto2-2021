@@ -30,6 +30,7 @@ public class ClientSocket {
     protected boolean send(String msg) {
         try {
             writer.print(msg);
+            writer.flush();
             return true;
         } catch (Exception e) {
             return false;
