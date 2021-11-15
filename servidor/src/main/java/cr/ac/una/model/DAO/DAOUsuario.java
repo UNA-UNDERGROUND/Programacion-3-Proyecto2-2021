@@ -1,6 +1,8 @@
 package cr.ac.una.model.DAO;
 
 import java.sql.ResultSet;
+import java.util.List;
+import java.util.Map;
 
 import cr.ac.una.model.Usuario;
 import cr.ac.una.model.SQL.DAO;
@@ -9,17 +11,19 @@ import cr.ac.una.model.SQL.DAO;
  * DAO de Usuario
  */
 public class DAOUsuario extends DAO {
-    public boolean agregarUsuario(Usuario usuario){
-        return ejecutarUpdate(sqlAgregarUsuario(usuario.getUser(), usuario.getPassword()));
+    public boolean agregarUsuario(Usuario usuario) {
+        return ejecutarUpdate(sqlAgregarUsuario(), usuario.getUser(), usuario.getPassword());
     }
+
     public Usuario recuperarUsuario(String usuario) {
-        ResultSet consulta = ejecutarConsulta(sqlRecuperarUsuario(usuario));
+        List<Map<String, Object>> consulta = ejecutarConsulta(sqlRecuperarUsuario(), usuario);
         if (consulta != null) {
             try {
-                if (consulta.next()) {
+                if (consulta.size() > 0) {
+                    Map<String, Object> fila = consulta.get(0);
                     Usuario u = new Usuario();
-                    u.setUser(consulta.getString("usuario"));
-                    u.setPassword(consulta.getString("pass"));
+                    u.setUser((String) fila.get("usuario"));
+                    u.setPassword((String) fila.get("pass"));
                     return u;
                 }
             } catch (Exception e) {
@@ -29,21 +33,20 @@ public class DAOUsuario extends DAO {
         return null;
     }
 
-    private static String sqlAgregarUsuario(String usuario, String pass) {
-        return new QueryBuilder()
-                .insertInto("usuarios")
-                .values("usuario", usuario)
-                .values("pass", pass)
-                .build();
+    private static String sqlAgregarUsuario() {
+        return new QueryBuilder() //
+                .insertInto("usuarios") // insertar en usuaarios
+                .values("usuario", "?") // usuario
+                .values("pass", "?") // pass
+                .build(); //
     }
 
-    private static String sqlRecuperarUsuario(String usuario) {
-        return new QueryBuilder()
-                .select("*")
-                .from("usuarios")
-                .where("usuario = " + usuario)
-                .build();
+    private static String sqlRecuperarUsuario() {
+        return new QueryBuilder() //
+                .select("*") // seleccionar todos los campos
+                .from("usuarios") // de la tabla usuarios
+                .where("usuario = ?") // donde el usuario sea igual al parametro
+                .build(); //
     }
-
 
 }

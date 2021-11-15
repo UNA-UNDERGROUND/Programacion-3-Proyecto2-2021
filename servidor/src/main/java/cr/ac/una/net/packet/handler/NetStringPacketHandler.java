@@ -55,13 +55,6 @@ public class NetStringPacketHandler extends ProcessorPacketHandler implements Pa
 
     @Override
     public void transferPacket(String packet, SocketData client) {
-        NetString netString = new NetString(packet);
-        System.out.println("");
-        char[] chrs = netString.toString().toCharArray();
-        System.out.println(chrs);
-        System.out.println(chrs.length);
-        // verbose
-        System.out.print("Enviando: " + packet);
         client.sendData(new NetString(packet).toString());
     }
 

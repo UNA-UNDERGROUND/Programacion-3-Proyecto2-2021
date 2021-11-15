@@ -11,7 +11,11 @@ public class GeneralController {
         try {
             Usuario usuario = new Usuario(username, password);
             DAOUsuario daoUsuario = new DAOUsuario();
-            return daoUsuario.recuperarUsuario(usuario.getUser());
+            Usuario usuarioDB = daoUsuario.recuperarUsuario(usuario.getUser());
+            if (usuario.getPassword().equals(usuarioDB.getPassword())) {
+                return usuarioDB;
+            }
+            return null;
         } catch (Exception e) {
             return null;
         }

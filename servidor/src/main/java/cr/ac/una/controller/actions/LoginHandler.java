@@ -20,7 +20,7 @@ public class LoginHandler implements RequestHandler {
         context.setUsuario(credenciales);
         if (credenciales != null) {
             System.out.println("usuario autenticado");
-            response.setParametro("estado", "ok");
+            response.setParametro("status", "ok");
         } else {
             System.out.println("usuario no autenticado");
             response.setParametro("status", "error");

@@ -11,7 +11,7 @@ public final class App {
     }
 
     void testLogin() {
-        ClientConnection connection = new ClientConnection("dummy", "dummy123");
+        ClientConnection connection = new ClientConnection("dummy", "Dummy123$");
         if (!connection.connect("localhost", 5727)) {
             System.err.println("No se pudo conectar con el servidor");
             return;
