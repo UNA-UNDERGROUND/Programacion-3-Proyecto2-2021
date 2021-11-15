@@ -15,7 +15,7 @@ public class ServerController {
         PacketHandler packetHandler = new NetStringPacketHandler(processor);
         rwHandler = new ReadWriteHandler(packetHandler);
         registerActions();
-        new Server();
+        server = new Server();
     }
 
     private void registerActions() {
