@@ -55,6 +55,15 @@ import cr.ac.una.net.packet.netstring.NetString;
 public class RequestPacket {
 
     /**
+     * Crea una nuevo paquete
+     * 
+     * @param accion la accion del paquete
+     */
+    public RequestPacket(String accion) {
+        this(accion, (List<String>) (new ArrayList<String>()));
+    }
+
+    /**
      * Crea una nueva solicitud
      * 
      * @param accion     la accion que se desea realizar
@@ -106,6 +115,26 @@ public class RequestPacket {
      */
     public HashMap<String, String> getParametros() {
         return parametros;
+    }
+
+    /**
+     * recupera un parametro indicado
+     * 
+     * @param clave la clave del parametro
+     * @return el valor del parametro
+     */
+    public String getParametro(String clave) {
+        return parametros.get(clave);
+    }
+
+    /**
+     * agrega/actualiza un parametro
+     * 
+     * @param clave la clave del parametro
+     * @param valor el valor del parametro
+     */
+    public void setParametro(String clave, String valor) {
+        parametros.put(clave, valor);
     }
 
     /**

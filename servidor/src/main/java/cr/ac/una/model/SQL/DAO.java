@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import cr.ac.una.controller.DBConectionController;
+import cr.ac.una.controller.database.DBConectionController;
 
 public class DAO {
     protected Connection getConnection(){

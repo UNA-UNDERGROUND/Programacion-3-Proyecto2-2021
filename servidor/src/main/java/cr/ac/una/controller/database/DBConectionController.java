@@ -1,4 +1,4 @@
-package cr.ac.una.controller;
+package cr.ac.una.controller.database;
 
 import java.sql.Connection;
 import java.util.Properties;

@@ -74,6 +74,14 @@ public class SocketData {
         client.close();
     }
 
+    public void setExtra(Object extra) {
+        this.extra = extra;
+    }
+
+    public Object getExtra() {
+        return extra;
+    }
+
     private AsynchronousServerSocketChannel server;
     private AsynchronousSocketChannel client;
     private IONetBuffer buffer;
@@ -81,6 +89,7 @@ public class SocketData {
     // private ByteBuffer outputBBuffer;
     private SocketAddress clientAddr;
     private ReadWriteHandler handler;
+    private Object extra = null;
 
     // private ArrayList<Byte> outputBuffer;
 
