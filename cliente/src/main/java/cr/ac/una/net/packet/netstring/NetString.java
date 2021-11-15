@@ -184,17 +184,20 @@ public class NetString {
         StringBuilder sb = new StringBuilder();
         int leidos = 0;
         int r;
+        Character c;
         while (leidos < bytes) {
             r = reader.read();
             if (r == -1) {
                 // no hay bytes por leer
                 throw new NotEnoughtBytesException("No hay suficientes bytes por leer");
             }
-            sb.append((char) r);
+            c = (char) r;
+            sb.append(c);
+
             leidos++;
         }
         r = reader.read();
-        Character c = (char) r;
+        c = (char) r;
         if (c.toString().equals(SEPARATOR_DATA)) {
             return sb.toString();
         } else {

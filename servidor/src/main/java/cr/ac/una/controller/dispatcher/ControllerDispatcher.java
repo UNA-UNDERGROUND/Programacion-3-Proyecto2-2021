@@ -16,7 +16,7 @@ public class ControllerDispatcher {
     }
 
     public void dispatch(RequestPacket requestPacket, SocketData client, PacketHandler processor) {
-        Context context = null;
+        Context context = new Context(client, processor);
         getRequestHandler(requestPacket.getAccion()).handle(requestPacket, context);
     }
 

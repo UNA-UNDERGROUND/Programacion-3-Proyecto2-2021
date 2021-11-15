@@ -10,6 +10,7 @@ public class LoginHandler implements RequestHandler {
 
     @Override
     public void handle(RequestPacket request, Context context) {
+        System.out.println("autenticando usuario");
         GeneralController controlador = GeneralController.getInstance();
         String usuario = request.getParametro("usuario");
         String password = request.getParametro("password");
@@ -18,10 +19,12 @@ public class LoginHandler implements RequestHandler {
         RequestPacket response = new RequestPacket("response");
         context.setUsuario(credenciales);
         if (credenciales != null) {
+            System.out.println("usuario autenticado");
             response.setParametro("estado", "ok");
         } else {
-            response.setParametro("estado", "error");
-            response.setParametro("mensaje", "Usuario o contraseña incorrectos");
+            System.out.println("usuario no autenticado");
+            response.setParametro("status", "error");
+            //response.setParametro("mensaje", "invalid creds");
         }
         context.sendResponse(response);
     }
