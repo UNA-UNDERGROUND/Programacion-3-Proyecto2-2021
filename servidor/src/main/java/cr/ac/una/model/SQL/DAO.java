@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.mysql.cj.jdbc.result.ResultSetMetaData;
-import com.mysql.cj.xdevapi.Result;
 
 import cr.ac.una.controller.database.DBConectionController;
 
