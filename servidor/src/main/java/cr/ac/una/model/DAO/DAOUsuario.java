@@ -1,6 +1,5 @@
 package cr.ac.una.model.DAO;
 
-import java.sql.ResultSet;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +12,10 @@ import cr.ac.una.model.SQL.DAO;
 public class DAOUsuario extends DAO {
     public boolean agregarUsuario(Usuario usuario) {
         return ejecutarUpdate(sqlAgregarUsuario(), usuario.getUser(), usuario.getPassword());
+    }
+
+    public boolean actualizarUsuario(Usuario usuarioDB) {
+        return ejecutarUpdate(sqlActualizarUsuario(), usuarioDB.getPassword(), usuarioDB.getUser());
     }
 
     public Usuario recuperarUsuario(String usuario) {
@@ -45,6 +48,14 @@ public class DAOUsuario extends DAO {
         return new QueryBuilder() //
                 .select("*") // seleccionar todos los campos
                 .from("usuarios") // de la tabla usuarios
+                .where("usuario = ?") // donde el usuario sea igual al parametro
+                .build(); //
+    }
+
+    private static String sqlActualizarUsuario() {
+        return new QueryBuilder() //
+                .update("usuarios") // actualizar la tabla usuarios
+                .set("pass", "?") // setear el campo pass
                 .where("usuario = ?") // donde el usuario sea igual al parametro
                 .build(); //
     }

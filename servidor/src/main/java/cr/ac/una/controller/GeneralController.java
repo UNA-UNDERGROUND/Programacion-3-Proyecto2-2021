@@ -21,6 +21,20 @@ public class GeneralController {
         }
     }
 
+    public boolean cambiarPass(Usuario usuario, String originalPassword, String newPassword) {
+        try {
+            DAOUsuario daoUsuario = new DAOUsuario();
+            Usuario usuarioDB = daoUsuario.recuperarUsuario(usuario.getUser());
+            if (usuarioDB.getPassword().equals(originalPassword)) {
+                usuarioDB.setPassword(newPassword);
+                return daoUsuario.actualizarUsuario(usuarioDB);
+            }
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     private static GeneralController instance = null;
 
     public static GeneralController getInstance() {
@@ -29,4 +43,5 @@ public class GeneralController {
         }
         return instance;
     }
+
 }

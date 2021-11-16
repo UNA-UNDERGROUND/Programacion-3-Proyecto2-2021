@@ -1,6 +1,7 @@
 package cr.ac.una.controller;
 
 import cr.ac.una.controller.actions.LoginHandler;
+import cr.ac.una.controller.actions.PasswordChangeHandler;
 import cr.ac.una.controller.dispatcher.ControllerDispatcher;
 import cr.ac.una.net.Server;
 import cr.ac.una.net.io.PacketHandler;
@@ -20,7 +21,10 @@ public class ServerController {
 
     private void registerActions() {
         ControllerDispatcher dispatcher = ControllerDispatcher.getInstance();
+        // login
         dispatcher.addHandler("login", new LoginHandler());
+        // cambiar contraseña
+        dispatcher.addHandler("pwd-change", new PasswordChangeHandler());
     }
 
     public void start() {
