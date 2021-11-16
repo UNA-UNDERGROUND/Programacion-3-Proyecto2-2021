@@ -57,6 +57,7 @@ public class GeneralController {
 
     public void logout() {
         connection.disconnect();
+        connection=null; 
     }
 
     private ClientConnection connection;
