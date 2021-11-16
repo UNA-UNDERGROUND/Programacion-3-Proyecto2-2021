@@ -12,8 +12,26 @@ public class ClientConnection {
     }
 
     public boolean connect(String host, int port) {
-        socket = new NetStringSocket(host, port);
-        return socket.connect();
+        if (socket != null) {
+            return false;
+        } else {
+            socket = new NetStringSocket(host, port);
+            return socket.connect();
+        }
+    }
+
+    public boolean isConnected() {
+        return socket != null;
+    }
+
+    public boolean disconnect() {
+        if (socket == null) {
+            return false;
+        } else {
+            socket.close();
+            socket = null;
+            return true;
+        }
     }
 
     public RequestPacket send(RequestPacket packet) {

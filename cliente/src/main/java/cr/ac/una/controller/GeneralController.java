@@ -14,10 +14,14 @@ public class GeneralController {
         return false;
     }
 
+    public void logout() {
+        connection.disconnect();
+    }
+
     private ClientConnection connection;
 
     private static final String host = "localhost";
-    private static final int port = 5721;
+    private static final int port = 5727;
     // singleton
     private static GeneralController instance = null;
 
