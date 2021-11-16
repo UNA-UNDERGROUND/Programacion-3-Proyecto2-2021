@@ -17,14 +17,13 @@ public class Context {
     }
 
     public Usuario getUsuario() {
-        return usuario;
+        return (Usuario) socketData.getExtra();
     }
 
     public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+        socketData.setExtra(usuario);
     }
 
     private SocketData socketData;
     private PacketHandler packetHandler;
-    private Usuario usuario;
 }
