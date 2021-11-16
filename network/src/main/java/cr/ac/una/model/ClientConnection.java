@@ -38,7 +38,7 @@ public class ClientConnection {
         RequestPacket status;
         try {
             if (isAuthenticated) {
-                send(packet);
+                socket.send(packet.toString());
                 String response = socket.receive();
                 status = RequestPacket.parseRequest(response);
             } else {

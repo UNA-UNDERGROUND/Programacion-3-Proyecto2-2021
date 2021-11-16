@@ -182,16 +182,14 @@ public class NetString {
      */
     private static String readBytes(Reader reader, int bytes) throws IOException, NetStringFormatException {
         StringBuilder sb = new StringBuilder();
-        int leidos = 0;
         int r;
-        while (leidos < bytes) {
+        while (sb.toString().getBytes().length < bytes) {
             r = reader.read();
             if (r == -1) {
                 // no hay bytes por leer
                 throw new NotEnoughtBytesException("No hay suficientes bytes por leer");
             }
             sb.append((char) r);
-            leidos++;
         }
         r = reader.read();
         Character c = (char) r;
