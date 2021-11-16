@@ -85,11 +85,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRetiroActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnRetiroActionPerformed
-        // TODO add your handling code here:
+        new VentanadeRetiro().setVisible(true);
+        dispose();
     }// GEN-LAST:event_btnRetiroActionPerformed
 
     private void btnCambioClaveActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnCambioClaveActionPerformed
-        // TODO add your handling code here:
+        new VentanaCambiodeClave().setVisible(true);
+        dispose();
     }// GEN-LAST:event_btnCambioClaveActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnSalirActionPerformed
