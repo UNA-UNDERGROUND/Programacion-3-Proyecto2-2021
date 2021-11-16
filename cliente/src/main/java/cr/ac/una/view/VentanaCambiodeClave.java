@@ -29,97 +29,109 @@ public class VentanaCambiodeClave extends javax.swing.JFrame {
 	 */
 	@SuppressWarnings("unchecked")
 	// <editor-fold defaultstate="collapsed" desc="Generated
-	// Code">//GEN-BEGIN:initComponents
-	private void initComponents() {
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
-		jLabel1 = new javax.swing.JLabel();
-		jLabel2 = new javax.swing.JLabel();
-		jLabel3 = new javax.swing.JLabel();
-		txtCambio = new javax.swing.JTextField();
-		txtClaveNueva = new javax.swing.JTextField();
-		txtConfirmar = new javax.swing.JTextField();
-		btnLimpiar = new javax.swing.JButton();
-		btnAceptar = new javax.swing.JButton();
-		btnRegresar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        btnLimpiar = new javax.swing.JButton();
+        btnAceptar = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
+        txtCambio = new javax.swing.JPasswordField();
+        txtClaveNueva = new javax.swing.JPasswordField();
+        txtConfirmar = new javax.swing.JPasswordField();
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-		jLabel1.setText("Clave Actual");
+        jLabel1.setText("Clave Actual");
 
-		jLabel2.setText("Clave Nueva");
+        jLabel2.setText("Clave Nueva");
 
-		jLabel3.setText("Confirmar Clave ");
+        jLabel3.setText("Confirmar Clave ");
 
-		btnLimpiar.setText("Limpiar");
-		btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				btnLimpiarActionPerformed(evt);
-			}
-		});
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
-		btnAceptar.setText("Aceptar");
-		btnAceptar.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				btnAceptarActionPerformed(evt);
-			}
-		});
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
 
-		btnRegresar.setText("Regresar");
-		btnRegresar.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				btnRegresarActionPerformed(evt);
-			}
-		});
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-		getContentPane().setLayout(layout);
-		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout
-				.createSequentialGroup()
-				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false).addGroup(layout
-						.createSequentialGroup().addGap(24, 24, 24)
-						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-								.addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-										.addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-						.addGroup(layout.createSequentialGroup().addGap(39, 39, 39).addComponent(btnLimpiar)))
-				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING).addGroup(layout
-						.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(layout.createSequentialGroup().addGap(18, 18, 18).addComponent(txtConfirmar,
-								javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-						.addGroup(layout.createSequentialGroup().addGap(19, 19, 19).addComponent(txtCambio,
-								javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-						.addGroup(layout.createSequentialGroup().addGap(18, 18, 18).addComponent(txtClaveNueva,
-								javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
-						.addGroup(javax.swing.GroupLayout.Alignment.LEADING,
-								layout.createSequentialGroup().addGap(45, 45, 45).addComponent(btnAceptar)
-										.addGap(34, 34, 34).addComponent(btnRegresar)))
-				.addContainerGap(60, Short.MAX_VALUE)));
-		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(layout.createSequentialGroup().addGap(47, 47, 47)
-						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-								.addComponent(jLabel1).addComponent(txtCambio, javax.swing.GroupLayout.PREFERRED_SIZE,
-										30, javax.swing.GroupLayout.PREFERRED_SIZE))
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-								.addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(txtClaveNueva, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE))
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-								.addComponent(txtConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 28,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addComponent(jLabel3))
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-								.addComponent(btnLimpiar).addComponent(btnAceptar).addComponent(btnRegresar))
-						.addGap(55, 55, 55)));
+        txtCambio.setText("jPasswordField1");
 
-		pack();
-	}// </editor-fold>//GEN-END:initComponents
+        txtClaveNueva.setText("jPasswordField2");
+
+        txtConfirmar.setText("jPasswordField1");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(btnLimpiar)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(btnAceptar)
+                        .addGap(34, 34, 34)
+                        .addComponent(btnRegresar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtCambio, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+                            .addComponent(txtClaveNueva)
+                            .addComponent(txtConfirmar))))
+                .addContainerGap(61, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCambio, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                    .addComponent(txtClaveNueva))
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLimpiar)
+                    .addComponent(btnAceptar)
+                    .addComponent(btnRegresar))
+                .addGap(55, 55, 55))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
 
 	private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnLimpiarActionPerformed
 		txtCambio.setText("");
@@ -129,9 +141,9 @@ public class VentanaCambiodeClave extends javax.swing.JFrame {
 
 	private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAceptarActionPerformed
 		GeneralController controller = GeneralController.getInstance();
-		String original = txtCambio.getText();
-		String claveNueva = txtClaveNueva.getText();
-		String confirmarClave = txtConfirmar.getText();
+		String original = String.valueOf(txtCambio.getPassword());
+		String claveNueva = String.valueOf(txtClaveNueva.getPassword());
+		String confirmarClave = String.valueOf(txtConfirmar.getPassword());
 		if (claveNueva.equals(confirmarClave)) {
 			if (controller.changePassword(original, claveNueva)) {
 				JOptionPane.showMessageDialog(this, "Clave cambiada con exito");
@@ -152,15 +164,15 @@ public class VentanaCambiodeClave extends javax.swing.JFrame {
 		this.dispose();
 	}// GEN-LAST:event_btnRegresarActionPerformed
 
-	// Variables declaration - do not modify//GEN-BEGIN:variables
-	private javax.swing.JButton btnAceptar;
-	private javax.swing.JButton btnLimpiar;
-	private javax.swing.JButton btnRegresar;
-	private javax.swing.JLabel jLabel1;
-	private javax.swing.JLabel jLabel2;
-	private javax.swing.JLabel jLabel3;
-	private javax.swing.JTextField txtCambio;
-	private javax.swing.JTextField txtClaveNueva;
-	private javax.swing.JTextField txtConfirmar;
-	// End of variables declaration//GEN-END:variables
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnRegresar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPasswordField txtCambio;
+    private javax.swing.JPasswordField txtClaveNueva;
+    private javax.swing.JPasswordField txtConfirmar;
+    // End of variables declaration//GEN-END:variables
 }
