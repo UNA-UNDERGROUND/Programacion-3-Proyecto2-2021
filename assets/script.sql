@@ -1,4 +1,5 @@
 create schema cajeros;
+use cajeros;
 -- creacion de tablas
 create table usuarios (
     usuario varchar(255) not null,
