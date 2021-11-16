@@ -10,7 +10,7 @@ public class LoginHandler implements RequestHandler {
 
     @Override
     public void handle(RequestPacket request, Context context) {
-        System.out.println("autenticando usuario");
+        System.out.println("[Auth]");
         GeneralController controlador = GeneralController.getInstance();
         String usuario = request.getParametro("usuario");
         String password = request.getParametro("password");
