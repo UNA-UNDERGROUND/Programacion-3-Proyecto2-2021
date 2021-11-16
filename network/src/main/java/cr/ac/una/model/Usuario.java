@@ -81,6 +81,32 @@ public class Usuario {
     }
 
     /**
+     * recupera el saldo de dinero del usuario
+     */
+    public float getSaldo() {
+        return saldo;
+    }
+
+    /**
+     * Cambia el saldo de dinero del usuario
+     * 
+     * @param saldo Nuevo saldo de dinero
+     */
+    public void setSaldo(float saldo) {
+        this.saldo = saldo;
+    }
+
+    /**
+     * verifica si la contraseña cumple con los requisitos de una contraseña segura:
+     * los requisitos son determinados por {@link #isSecurePassword(String)}
+     * 
+     * @return true si la contraseña cumple con los requisitos
+     */
+    public boolean tienePasswordSegura() {
+        return isSecurePassword(password);
+    }
+
+    /**
      * verifica si la contraseña cumple con los siguientes requisitos:
      * <ul>
      * <li>almenos 8 caracteres</li>
@@ -90,16 +116,19 @@ public class Usuario {
      * <li>almenos un caracter especial</li>
      * </ul>
      * 
+     * @param password Contraseña a verificar
+     * 
      * @return true si la contraseña cumple con los requisitos
      */
-    public boolean tienePasswordSegura() {
-        return this.password.length() >= 8 // mayor o igual a 8 caracteres
-                && this.password.matches(".*[A-Z].*") // al menos una letra mayúscula
-                && this.password.matches(".*[a-z].*") // al menos una letra minúscula
-                && this.password.matches(".*[0-9].*") // al menos un número
-                && this.password.matches(".*[^a-zA-Z0-9].*"); // al menos un caracter especial
+    public static boolean isSecurePassword(String password) {
+        return password.length() >= 8 // mayor o igual a 8 caracteres
+                && password.matches(".*[A-Z].*") // al menos una letra mayúscula
+                && password.matches(".*[a-z].*") // al menos una letra minúscula
+                && password.matches(".*[0-9].*") // al menos un número
+                && password.matches(".*[^a-zA-Z0-9].*"); // al menos un caracter especial
     }
 
     private String user;
     private String password;
+    private float saldo = 0;
 }

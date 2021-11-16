@@ -5,6 +5,10 @@
  */
 package cr.ac.una.view;
 
+import javax.swing.JOptionPane;
+
+import cr.ac.una.controller.GeneralController;
+
 /**
  *
  * @author PC
@@ -16,6 +20,23 @@ public class VentanadeRetiro extends javax.swing.JFrame {
      */
     public VentanadeRetiro() {
         initComponents();
+        init();
+    }
+
+    private void init() {
+        txtResultado.setEditable(false);
+        txtSaldo.setEditable(false);
+        Float saldo = GeneralController.getInstance().recuperarDinero();
+        if (saldo != null) {
+            txtSaldo.setText(saldo.toString());
+        } else {
+            // regresar a la ventana de login
+            GeneralController.getInstance().logout();
+            // popup
+            JOptionPane.showMessageDialog(this, "No se pudo recuperar el saldo, por favor inicie sesion nuevamente");
+            btnAceptar.setEnabled(false);
+            btnLimpiar.setEnabled(false);
+        }
     }
 
     /**
@@ -133,17 +154,32 @@ public class VentanadeRetiro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnLimpiarActionPerformed
-        txtSaldo.setText("");
         txtRetirar.setText("");
         txtResultado.setText("");
     }// GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAceptarActionPerformed
-        // TODO add your handling code here:
+        try {
+            Float saldo = Float.parseFloat(txtSaldo.getText());
+            Float monto = Float.parseFloat(txtRetirar.getText());
+            if (monto > saldo) {
+                txtResultado.setText("Saldo insuficiente");
+            } else {
+                if (GeneralController.getInstance().retirarMonto(monto)) {
+                    txtResultado.setText("Retire su dinero");
+                    txtSaldo.setText(GeneralController.getInstance().recuperarDinero().toString());
+                } else {
+                    txtResultado.setText("Error al retirar");
+                }
+            }
+        } catch (Exception e) {
+            txtResultado.setText("El monto debe ser un numero");
+        }
     }// GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnContinuarActionPerformed
-        // TODO add your handling code here:
+        new VentanaPrincipal().setVisible(true);
+        dispose();
     }// GEN-LAST:event_btnContinuarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

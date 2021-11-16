@@ -35,6 +35,30 @@ public class GeneralController {
         }
     }
 
+    public boolean retiroDinero(String usuario, String monto) {
+        try {
+            DAOUsuario daoUsuario = new DAOUsuario();
+            Usuario usuarioDB = daoUsuario.recuperarUsuario(usuario);
+            if (usuarioDB.getSaldo() >= Float.parseFloat(monto)) {
+                usuarioDB.setSaldo(usuarioDB.getSaldo() - Float.parseFloat(monto));
+                return daoUsuario.actualizarSaldo(usuarioDB);
+            }
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public Float getSaldoActual(String usuario) {
+        try {
+            DAOUsuario daoUsuario = new DAOUsuario();
+            Usuario usuarioDB = daoUsuario.recuperarUsuario(usuario);
+            return usuarioDB.getSaldo();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     private static GeneralController instance = null;
 
     public static GeneralController getInstance() {

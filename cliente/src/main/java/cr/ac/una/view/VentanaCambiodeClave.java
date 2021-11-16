@@ -138,7 +138,9 @@ public class VentanaCambiodeClave extends javax.swing.JFrame {
 				new VentanaPrincipal().setVisible(true);
 				this.dispose();
 			} else {
-				JOptionPane.showMessageDialog(this, "Clave no cambiada");
+				// validacion del lado del servidor
+				JOptionPane.showMessageDialog(this,
+						"Clave no cambiada, verifique que sea una contraseña segura o que ingreso la contraseña antigua correctamente");
 			}
 		} else {
 			JOptionPane.showMessageDialog(this, "Las claves no coinciden");

@@ -16,6 +16,16 @@ public class GeneralController {
         return false;
     }
 
+    public boolean retirarMonto(Float monto) {
+        if (connection != null) {
+            RequestPacket packet = new RequestPacket("retiro-dinero");
+            packet.setParametro("monto", monto.toString());
+            RequestPacket response = connection.send(packet);
+            return response.getParametro("status").equals("ok");
+        }
+        return false;
+    }
+
     public boolean changePassword(String oldPassword, String newPassword) {
         if (connection == null) {
             return false;
@@ -25,6 +35,24 @@ public class GeneralController {
         packet.setParametro("newPassword", newPassword);
         RequestPacket response = connection.send(packet);
         return response.getParametro("status").equals("ok");
+    }
+
+    public Float recuperarDinero() {
+        try {
+            if (connection != null) {
+                RequestPacket packet = new RequestPacket("recuperar-saldo");
+                // toda solicitud espera almenos 1 parametro
+                // de lo contrario se considera un error
+                // y el cliente se desconecta
+                packet.setParametro("dummy-param", "0");
+                RequestPacket response = connection.send(packet);
+                if (response.getParametro("status").equals("ok")) {
+                    return Float.parseFloat(response.getParametro("monto"));
+                }
+            }
+        } catch (Exception e) {
+        }
+        return null;
     }
 
     public void logout() {

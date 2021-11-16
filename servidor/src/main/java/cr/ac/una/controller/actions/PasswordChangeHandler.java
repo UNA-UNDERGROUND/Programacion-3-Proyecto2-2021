@@ -26,7 +26,11 @@ public class PasswordChangeHandler implements RequestHandler {
                 response.setParametro("message", "Contraseña cambiada");
             } else {
                 response.setParametro("status", "error");
-                response.setParametro("error", "Contraseña incorrecta");
+                if (Usuario.isSecurePassword(newPassword)) {
+                    response.setParametro("error", "Contraseña no segura");
+                } else {
+                    response.setParametro("error", "Contraseña no cambiada");
+                }
             }
         }
         context.sendResponse(response);

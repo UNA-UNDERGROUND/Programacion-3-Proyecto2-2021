@@ -2,6 +2,8 @@ package cr.ac.una.controller;
 
 import cr.ac.una.controller.actions.LoginHandler;
 import cr.ac.una.controller.actions.PasswordChangeHandler;
+import cr.ac.una.controller.actions.recuperarDineroHandler;
+import cr.ac.una.controller.actions.retiroDineroHandler;
 import cr.ac.una.controller.dispatcher.ControllerDispatcher;
 import cr.ac.una.net.Server;
 import cr.ac.una.net.io.PacketHandler;
@@ -25,6 +27,10 @@ public class ServerController {
         dispatcher.addHandler("login", new LoginHandler());
         // cambiar contraseña
         dispatcher.addHandler("pwd-change", new PasswordChangeHandler());
+        // retiro de dinero
+        dispatcher.addHandler("retiro-dinero", new retiroDineroHandler());
+        // recuperar saldo
+        dispatcher.addHandler("recuperar-saldo", new recuperarDineroHandler());
     }
 
     public void start() {

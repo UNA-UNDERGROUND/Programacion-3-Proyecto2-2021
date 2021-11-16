@@ -1,5 +1,6 @@
 package cr.ac.una.model.DAO;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,7 @@ public class DAOUsuario extends DAO {
                     Usuario u = new Usuario();
                     u.setUser((String) fila.get("usuario"));
                     u.setPassword((String) fila.get("pass"));
+                    u.setSaldo(((BigDecimal) fila.get("saldo")).floatValue());
                     return u;
                 }
             } catch (Exception e) {
@@ -34,6 +36,10 @@ public class DAOUsuario extends DAO {
             }
         }
         return null;
+    }
+
+    public boolean actualizarSaldo(Usuario usuarioDB) {
+        return ejecutarUpdate(sqlActualizarSaldo(), usuarioDB.getSaldo(), usuarioDB.getUser());
     }
 
     private static String sqlAgregarUsuario() {
@@ -60,4 +66,11 @@ public class DAOUsuario extends DAO {
                 .build(); //
     }
 
+    private static String sqlActualizarSaldo() {
+        return new QueryBuilder() //
+                .update("usuarios") // actualizar la tabla usuarios
+                .set("saldo", "?") // setear el campo saldo
+                .where("usuario = ?") // donde el usuario sea igual al parametro
+                .build(); //
+    }
 }
