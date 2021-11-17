@@ -71,12 +71,6 @@ public class VentanaCambiodeClave extends javax.swing.JFrame {
             }
         });
 
-        txtCambio.setText("jPasswordField1");
-
-        txtClaveNueva.setText("jPasswordField2");
-
-        txtConfirmar.setText("jPasswordField1");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
